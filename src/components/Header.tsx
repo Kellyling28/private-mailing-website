@@ -44,8 +44,8 @@ export const Header: React.FC<HeaderProps> = ({ onOpenModal }) => {
         <nav className="hidden md:flex items-center space-x-8 lg:space-x-12">
           <button
             id="nav-curriculum"
-            onClick={() => handleNavClick('curriculum')}
-            className="font-cinzel text-xs lg:text-sm font-semibold tracking-widest text-[#d6b776] hover:text-[#fff2d1] transition-colors py-2 relative group"
+            onClick={() => handleNavClick(null, 'curriculum')}
+            className="font-cinzel text-xs lg:text-sm font-semibold tracking-widest text-[#d6b776] hover:text-[#fff2d1] transition-colors py-2 relative group cursor-pointer"
           >
             CURRICULUM
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d6b776] transition-all duration-300 group-hover:w-full"></span>
@@ -88,7 +88,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenModal }) => {
         <div className="md:hidden bg-[#0e1015] border-b border-[#31291d] px-6 py-6 space-y-4 animate-in slide-in-from-top-4 duration-200">
           <button
             id="mobile-nav-curriculum"
-            onClick={() => handleNavClick('curriculum')}
+            onClick={() => handleNavClick(null, 'curriculum')}
             className="block w-full text-left font-cinzel text-sm font-semibold tracking-widest text-[#d6b776] hover:text-[#fff2d1] py-2 border-b border-[#231e16]"
           >
             CURRICULUM

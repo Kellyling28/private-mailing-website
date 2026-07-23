@@ -1,123 +1,124 @@
-import React from 'react';
-import { BookOpen, ShieldCheck, Mail, CheckCircle2 } from 'lucide-react';
+import React, { useState } from 'react';
+import { BookOpen, Mail, ShieldCheck } from 'lucide-react';
+import { ModalType } from '../types';
+
+interface MasterySectionProps {
+  onOpenModal?: (type: ModalType) => void;
+}
 
 interface MasteryCard {
   id: string;
-  title: string;
   placeholderName: string;
-  iconFallback: React.ReactNode;
   bullets: string[];
+  fallbackUI: React.ReactNode;
 }
 
-export const MasterySection: React.FC = () => {
-  const masteryData: MasteryCard[] = [
+export const MasterySection: React.FC<MasterySectionProps> = ({ onOpenModal }) => {
+  const [imageErrorMap, setImageErrorMap] = useState<Record<string, boolean>>({});
+
+  const handleImageError = (id: string) => {
+    setImageErrorMap((prev) => ({ ...prev, [id]: true }));
+  };
+
+  const masteryCards: MasteryCard[] = [
     {
-      id: 'legal-book',
-      title: 'Reduced Postage & Legal Systems',
+      id: 'card-1',
       placeholderName: 'PLACEHOLDER_legal-book-icon',
-      iconFallback: (
-        <div className="relative w-28 h-28 flex items-center justify-center bg-gradient-to-b from-[#241f17] to-[#12100c] rounded-lg border border-[#d6b776]/40 shadow-xl group-hover:border-[#d6b776] transition-all">
-          <BookOpen className="w-12 h-12 text-[#d6b776]" />
-          <div className="absolute top-2 right-2 text-[10px] font-bold text-[#fce196] border border-[#d6b776]/50 px-1 rounded">LEGAL</div>
+      bullets: ['Reduced Postage', 'Restore US legal Systems'],
+      fallbackUI: (
+        <div className="w-36 h-36 bg-[#121317] border border-[#d6b776]/40 rounded-xl relative flex items-center justify-center p-4 shadow-lg group-hover:border-[#d6b776] transition-colors">
+          {/* Badge */}
+          <div className="absolute top-2.5 right-2.5 border border-[#d6b776]/70 px-1.5 py-0.5 rounded text-[9px] font-sans-body tracking-wider text-[#d6b776] bg-[#1a1c22]">
+            LEGAL
+          </div>
+          {/* Center Book Icon */}
+          <BookOpen className="w-10 h-10 text-[#d6b776] stroke-[1.5]" />
         </div>
-      ),
-      bullets: [
-        'Reduced Postage',
-        'Restore US legal Systems'
-      ]
+      )
     },
     {
-      id: 'mailbox-lock',
-      title: 'System Privatization',
+      id: 'card-2',
       placeholderName: 'PLACEHOLDER_mailbox-lock-icon',
-      iconFallback: (
-        <div className="relative w-28 h-28 flex items-center justify-center bg-gradient-to-b from-[#241f17] to-[#12100c] rounded-lg border border-[#d6b776]/40 shadow-xl group-hover:border-[#d6b776] transition-all">
-          <Mail className="w-12 h-12 text-[#d6b776]" />
-          <div className="absolute -bottom-1 -right-1 bg-[#1a160f] p-1.5 rounded-full border border-[#d6b776]">
-            <ShieldCheck className="w-5 h-5 text-[#fce196]" />
+      bullets: ['System Privatization', 'Historical Laws & Special Procedures'],
+      fallbackUI: (
+        <div className="w-36 h-36 bg-[#121317] border border-[#d6b776]/40 rounded-xl relative flex items-center justify-center p-4 shadow-lg group-hover:border-[#d6b776] transition-colors">
+          {/* Center Mail Icon */}
+          <Mail className="w-10 h-10 text-[#d6b776] stroke-[1.5]" />
+          {/* Shield Badge Overlay at bottom right */}
+          <div className="absolute -bottom-2 -right-2 bg-[#121317] border border-[#d6b776] p-1.5 rounded-full shadow-md">
+            <ShieldCheck className="w-4 h-4 text-[#d6b776]" />
           </div>
         </div>
-      ),
-      bullets: [
-        'System Privatization',
-        'Historical Laws & Special Procedures'
-      ]
+      )
     },
     {
-      id: 'airmail-stamps',
-      title: 'Standcall Laws & Postage',
+      id: 'card-3',
       placeholderName: 'PLACEHOLDER_airmail-stamps-icon',
-      iconFallback: (
-        <div className="relative w-28 h-28 flex items-center justify-center bg-gradient-to-b from-[#241f17] to-[#12100c] rounded-lg border border-[#d6b776]/40 shadow-xl group-hover:border-[#d6b776] transition-all">
-          <div className="text-center">
-            <div className="text-2xl font-cinzel font-bold text-[#fce196] tracking-tighter">USPS</div>
-            <div className="text-[9px] uppercase tracking-widest text-[#d6b776]">STAMPS</div>
+      bullets: ['Standcall Laws with low postage stamps.'],
+      fallbackUI: (
+        <div className="w-36 h-36 bg-[#121317] border border-[#d6b776]/40 rounded-xl relative flex flex-col items-center justify-center p-4 shadow-lg group-hover:border-[#d6b776] transition-colors text-center">
+          <div className="font-cinzel text-2xl font-bold text-[#fce196] tracking-tight">
+            USPS
+          </div>
+          <div className="font-sans-body text-[9px] uppercase tracking-widest text-[#d6b776] mt-0.5">
+            STAMPS
           </div>
         </div>
-      ),
-      bullets: [
-        'Standcall Laws with low postage stamps.'
-      ]
+      )
     }
   ];
 
   return (
-    <section id="what-you-will-master" className="relative py-16 sm:py-20 bg-[#0c0e12] border-t border-[#1f1b13]">
-      {/* Background glow accents */}
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-96 h-96 bg-[#d6b776]/5 rounded-full blur-3xl pointer-events-none"></div>
-
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 relative z-10">
+    <section id="what-you-will-master" className="relative py-16 sm:py-24 bg-[#0a0b0e] border-t border-[#1a1711]">
+      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
+        
         {/* Section Header */}
-        <div className="mb-12">
-          <h2 className="font-cormorant text-3xl sm:text-4xl lg:text-5xl font-semibold text-[#e5cb88] tracking-tight">
+        <div className="mb-14">
+          <h2 className="font-cormorant text-4xl sm:text-5xl font-semibold text-[#f0e2be] tracking-tight">
             What You Will Master
           </h2>
-          <div className="w-20 h-0.5 bg-[#d6b776]/60 mt-3"></div>
+          {/* Golden accent bar under title */}
+          <div className="w-24 h-0.5 bg-[#d6b776] mt-4"></div>
         </div>
 
         {/* 3 Columns Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
-          {masteryData.map((item) => (
-            <div
-              key={item.id}
-              className="group flex flex-col items-start p-2 sm:p-4 rounded-xl transition-all duration-300"
-            >
-              {/* Image Graphic with Placeholder handle */}
-              <div className="mb-6 relative">
-                <img
-                  src={item.placeholderName}
-                  alt={item.title}
-                  className="w-28 h-28 object-contain rounded-lg hidden"
-                  onError={(e) => {
-                    // Show fallback when PLACEHOLDER image is not yet loaded
-                    const target = e.target as HTMLElement;
-                    target.classList.add('hidden');
-                    if (target.nextElementSibling) {
-                      target.nextElementSibling.classList.remove('hidden');
-                    }
-                  }}
-                />
-                {/* Visual Graphic Representation */}
-                <div className="block">
-                  {item.iconFallback}
-                </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-14 items-start">
+          {masteryCards.map((card) => (
+            <div key={card.id} className="group flex flex-col items-start space-y-6">
+              
+              {/* Icon / Image Container */}
+              <div className="relative">
+                {!imageErrorMap[card.id] ? (
+                  <img
+                    src={card.placeholderName}
+                    alt={card.placeholderName}
+                    onError={() => handleImageError(card.id)}
+                    className="w-36 h-36 object-contain rounded-xl"
+                  />
+                ) : (
+                  card.fallbackUI
+                )}
               </div>
 
               {/* Bullet Points */}
-              <ul className="space-y-3 font-sans-body text-sm sm:text-base text-gray-200">
-                {item.bullets.map((bullet, idx) => (
-                  <li key={idx} className="flex items-start space-x-2.5">
-                    <span className="text-[#d6b776] text-lg leading-none mt-0.5">•</span>
-                    <span className="leading-snug text-gray-200 group-hover:text-white transition-colors">
+              <ul className="space-y-3 font-sans-body text-base text-gray-200 leading-snug">
+                {card.bullets.map((bullet, idx) => (
+                  <li key={idx} className="flex items-start space-x-3">
+                    <span className="text-[#d6b776] text-xl leading-none mt-0.5">•</span>
+                    <span className="text-gray-200 group-hover:text-white transition-colors">
                       {bullet}
                     </span>
                   </li>
                 ))}
               </ul>
+
             </div>
           ))}
         </div>
+
       </div>
     </section>
   );
 };
+
+

@@ -16,13 +16,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenModal }) => {
         <img
           src={bgImageUrl}
           alt="Private Mailing Secrets Hero Background"
-          className="w-full h-full object-cover object-center lg:object-right filter brightness-95 contrast-105"
+          className="w-full h-full object-cover object-[center_top] sm:object-[75%_top] lg:object-[85%_top] filter brightness-95 contrast-105"
         />
         {/* Gradient dark mask to ensure readability on the left */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0b0e] via-[#0a0b0e]/90 md:via-[#0a0b0e]/80 to-transparent w-full lg:w-3/4"></div>
-        {/* Top & Bottom vignette gradients */}
-        <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-[#0a0b0e] to-transparent"></div>
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#0a0b0e] to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0b0e] via-[#0a0b0e]/90 md:via-[#0a0b0e]/75 to-transparent w-full lg:w-3/4"></div>
+        {/* Subtle Top & Bottom vignette gradients */}
+        <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-[#0a0b0e]/90 via-[#0a0b0e]/40 to-transparent"></div>
+        <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#0a0b0e] to-transparent"></div>
       </div>
 
       {/* Hero Content Container */}

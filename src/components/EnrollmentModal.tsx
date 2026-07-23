@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, ShieldCheck, Lock, CheckCircle2, CreditCard, Sparkles, User, Mail, Phone } from 'lucide-react';
+import { X, ShieldCheck, Lock, CheckCircle2, CreditCard, Sparkles, User, Mail, Phone, Calendar, KeyRound } from 'lucide-react';
 
 interface EnrollmentModalProps {
   isOpen: boolean;
@@ -12,7 +12,7 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({ isOpen, onClos
     fullName: '',
     email: '',
     phone: '',
-    cardNumber: '4242 •••• •••• 4242',
+    cardNumber: '4242 4242 4242 4242',
     expDate: '12/28',
     cvv: '988'
   });
@@ -20,6 +20,25 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({ isOpen, onClos
   const [isSuccess, setIsSuccess] = useState(false);
 
   if (!isOpen) return null;
+
+  const handleCardNumberChange = (val: string) => {
+    const raw = val.replace(/\D/g, '').slice(0, 16);
+    const formatted = raw.replace(/(\d{4})(?=\d)/g, '$1 ');
+    setFormData((prev) => ({ ...prev, cardNumber: formatted }));
+  };
+
+  const handleExpDateChange = (val: string) => {
+    let raw = val.replace(/\D/g, '').slice(0, 4);
+    if (raw.length >= 3) {
+      raw = `${raw.slice(0, 2)}/${raw.slice(2)}`;
+    }
+    setFormData((prev) => ({ ...prev, expDate: raw }));
+  };
+
+  const handleCvvChange = (val: string) => {
+    const raw = val.replace(/\D/g, '').slice(0, 4);
+    setFormData((prev) => ({ ...prev, cvv: raw }));
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -187,27 +206,39 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({ isOpen, onClos
 
                 <div className="bg-[#141722] border border-[#2c261b] p-3.5 rounded-lg space-y-3">
                   <div className="relative">
-                    <CreditCard className="w-4 h-4 text-gray-400 absolute left-3 top-3" />
+                    <CreditCard className="w-4 h-4 text-[#d6b776] absolute left-3 top-3" />
                     <input
                       type="text"
-                      readOnly
+                      placeholder="4242 4242 4242 4242"
                       value={formData.cardNumber}
-                      className="w-full bg-[#1c202e] border border-[#30291d] rounded-md pl-9 pr-3 py-2 text-xs text-gray-300 font-mono"
+                      onChange={(e) => handleCardNumberChange(e.target.value)}
+                      maxLength={19}
+                      className="w-full bg-[#1c202e] border border-[#30291d] rounded-md pl-9 pr-3 py-2 text-xs text-white placeholder-gray-500 font-mono focus:outline-none focus:border-[#d6b776]"
                     />
                   </div>
                   <div className="grid grid-cols-2 gap-3">
-                    <input
-                      type="text"
-                      readOnly
-                      value={`Expires: ${formData.expDate}`}
-                      className="bg-[#1c202e] border border-[#30291d] rounded-md px-3 py-2 text-xs text-gray-300 font-mono text-center"
-                    />
-                    <input
-                      type="text"
-                      readOnly
-                      value={`CVV: ${formData.cvv}`}
-                      className="bg-[#1c202e] border border-[#30291d] rounded-md px-3 py-2 text-xs text-gray-300 font-mono text-center"
-                    />
+                    <div className="relative">
+                      <Calendar className="w-4 h-4 text-[#d6b776] absolute left-3 top-2.5" />
+                      <input
+                        type="text"
+                        placeholder="MM/YY"
+                        value={formData.expDate}
+                        onChange={(e) => handleExpDateChange(e.target.value)}
+                        maxLength={5}
+                        className="w-full bg-[#1c202e] border border-[#30291d] rounded-md pl-9 pr-3 py-2 text-xs text-white placeholder-gray-500 font-mono text-left focus:outline-none focus:border-[#d6b776]"
+                      />
+                    </div>
+                    <div className="relative">
+                      <KeyRound className="w-4 h-4 text-[#d6b776] absolute left-3 top-2.5" />
+                      <input
+                        type="text"
+                        placeholder="CVV"
+                        value={formData.cvv}
+                        onChange={(e) => handleCvvChange(e.target.value)}
+                        maxLength={4}
+                        className="w-full bg-[#1c202e] border border-[#30291d] rounded-md pl-9 pr-3 py-2 text-xs text-white placeholder-gray-500 font-mono text-left focus:outline-none focus:border-[#d6b776]"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>

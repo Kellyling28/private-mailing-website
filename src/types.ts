@@ -14,4 +14,4 @@ export interface FaqItem {
   category: 'Legal' | 'Postal' | 'Access' | 'Cohort';
 }
 
-export type ModalType = 'curriculum' | 'faqs' | 'enroll' | null;
+export type ModalType = 'curriculum' | 'faqs' | 'enroll' | 'privacy' | 'terms' | 'contact' | null;

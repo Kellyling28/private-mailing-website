@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { Header } from './components/Header';
 import { HeroSection } from './components/HeroSection';
 import { MasterySection } from './components/MasterySection';
+import { CurriculumSection } from './components/CurriculumSection';
 import { CurriculumModal } from './components/CurriculumModal';
 import { FaqModal } from './components/FaqModal';
 import { EnrollmentModal } from './components/EnrollmentModal';
+import { PrivacyModal } from './components/PrivacyModal';
 import { Footer } from './components/Footer';
 import { ModalType } from './types';
 
@@ -30,7 +32,10 @@ export default function App() {
         <HeroSection onOpenModal={handleOpenModal} />
 
         {/* What You Will Master Grid Section */}
-        <MasterySection />
+        <MasterySection onOpenModal={handleOpenModal} />
+
+        {/* Dedicated Curriculum Section */}
+        <CurriculumSection onOpenModal={handleOpenModal} />
       </main>
 
       {/* Footer */}
@@ -51,6 +56,18 @@ export default function App() {
       <EnrollmentModal
         isOpen={activeModal === 'enroll'}
         onClose={handleCloseModal}
+      />
+
+      <PrivacyModal
+        isOpen={activeModal === 'privacy' || activeModal === 'terms' || activeModal === 'contact'}
+        onClose={handleCloseModal}
+        activeTab={
+          activeModal === 'terms'
+            ? 'terms'
+            : activeModal === 'contact'
+            ? 'contact'
+            : 'privacy'
+        }
       />
     </div>
   );
